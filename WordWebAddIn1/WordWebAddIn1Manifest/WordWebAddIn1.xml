@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--Created:ce44715c-8c4e-446b-879c-ea9ebe0f09c8-->
+<OfficeApp 
+          xmlns="http://schemas.microsoft.com/office/appforoffice/1.1" 
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+          xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0" 
+          xmlns:ov="http://schemas.microsoft.com/office/taskpaneappversionoverrides"
+          xsi:type="TaskPaneApp">
+
+  <!-- Início – Configurações Básicas: metadados de suplemento, usados para todas as versões do Office a menos que uma substituição seja fornecida. -->
+
+  <!-- IMPORTANTE! A ID deve ser exclusiva para o suplemento, se você reutilizar esse manifesto certifique-se de alterar essa ID para um novo GUID. -->
+  <Id>1b53d607-fa69-4225-b5d8-38e9c043cefd</Id>
+
+  <!--Versão. Atualizações da loja apenas serão acionadas se houver uma alteração de versão. -->
+  <Version>1.0.0.0</Version>
+  <ProviderName>[Nome do provedor]</ProviderName>
+  <DefaultLocale>en-US</DefaultLocale>
+  <!-- O nome de exibição do seu suplemento. Usado na loja e em vários locais da interface do usuário do Office, como a caixa de diálogo suplementos. -->
+  <DisplayName DefaultValue="WordWebAddIn1" />
+  <Description DefaultValue="WordWebAddIn1"/>
+  <!-- Ícone para o suplemento. Usado nas telas de instalação e na caixa de diálogo de suplementos. -->
+  <IconUrl DefaultValue="~remoteAppUrl/Images/Button32x32.png" />
+
+  <SupportUrl DefaultValue="http://www.contoso.com" />
+  <!-- Domínios que serão permitidos ao navegar. Por exemplo, se você usar ShowTaskpane e, em seguida, tiver um link href, a navegação só será permitida se o domínio estiver na lista. -->
+  <AppDomains>
+    <AppDomain>AppDomain1</AppDomain>
+    <AppDomain>AppDomain2</AppDomain>
+    <AppDomain>AppDomain3</AppDomain>
+  </AppDomains>
+  <!--Fim – Configurações Básicas. -->
+  
+  <!--Início – integração de Modo TaskPane. Esta seção será usada se não houver VersionOverrides ou se a versão de cliente do Office não der suporte a comandos de suplemento. -->
+  <Hosts>
+    <Host Name="Document" />
+  </Hosts>
+  <DefaultSettings>
+    <SourceLocation DefaultValue="~remoteAppUrl/Home.html" />
+  </DefaultSettings>
+  <!-- Fim – integração de Modo TaskPane.  -->
+
+  <Permissions>ReadWriteDocument</Permissions>
+
+  <!-- Início – Integração do Modo de Comandos do Suplemento. -->
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="VersionOverridesV1_0">
+    
+    <!-- O nó de Hosts é necessário. -->
+    <Hosts>
+      <!-- Cada host pode ter um conjunto de comandos diferente. -->
+      <!-- O host do Excel é a pasta de trabalho, o host do Word é o documento e o host do PowerPoint é a apresentação. -->
+      <!-- Certifique-se de que os hosts que você substituir correspondam os hosts declarados na seção superior do manifesto. -->
+      <Host xsi:type="Document">
+        <!-- Fator forma. No momento, há suporte somente para DesktopFormFactor. -->
+        <DesktopFormFactor>
+          <!--"Esse código permite que uma mensagem personalizada seja exibida quando o suplemento é carregado com êxito na instalação individual."-->
+          <GetStarted>
+            <!-- Título do balão Introdução. O atributo resid aponta para um recurso de ShortString -->
+            <Title resid="Contoso.GetStarted.Title"/>
+
+            <!-- Descrição do balão Introdução. resid aponta para um recurso de LongString -->
+            <Description resid="Contoso.GetStarted.Description"/>
+
+            <!-- Aponta para um recurso de URL que detalha como o suplemento deve ser usado. -->
+            <LearnMoreUrl resid="Contoso.GetStarted.LearnMoreUrl"/>
+          </GetStarted>
+          <!-- O arquivo de função é uma página HTML que contém o JavaScript em que as funções para ExecuteAction serão chamadas.              Considere o FunctionFile como o código subjacente a ExecuteFunction. -->
+          <FunctionFile resid="Contoso.DesktopFunctionFile.Url" />
+
+          <!-- PrimaryCommandSurface é a faixa de opções principal do Office. -->
+          <ExtensionPoint xsi:type="PrimaryCommandSurface">
+            <!-- Use OfficeTab para estender uma guia existente. Use CustomTab para criar uma nova guia. -->
+            <OfficeTab id="TabHome">
+              <!-- Certifique-se de fornecer uma ID exclusiva para o grupo. A recomendação para qualquer ID é que seja usado o mesmo namespace encontrado no nome da empresa. -->
+              <Group id="Contoso.Group1">
+                <!-- Rótulo para o grupo. resid deve apontar para um recurso de ShortString. -->
+                <Label resid="Contoso.Group1Label" />
+                <!-- Ícones. Os tamanhos necessários são 16, 32 e 80. Os opcionais são 20, 24, 40, 48 e 64. É altamente recomendável fornecer todos os tamanhos para uma ótima experiência do usuário. -->
+                <!-- Use ícones PNG. Todas as URLs na seção recursos devem usar HTTPS. -->
+                <Icon>
+                  <bt:Image size="16" resid="Contoso.tpicon_16x16" />
+                  <bt:Image size="32" resid="Contoso.tpicon_32x32" />
+                  <bt:Image size="80" resid="Contoso.tpicon_80x80" />
+                </Icon>
+
+                <!-- Controle. Ele pode ser do tipo "Button" ou "Menu". -->
+                <Control xsi:type="Button" id="Contoso.TaskpaneButton">
+                  <Label resid="Contoso.TaskpaneButton.Label" />
+                  <Supertip>
+                    <!-- Título da dica de ferramenta. resid deve apontar para um recurso de ShortString. -->
+                    <Title resid="Contoso.TaskpaneButton.Label" />
+                    <!-- Descrição da dica de ferramenta. resid deve apontar para um recurso de LongString. -->
+                    <Description resid="Contoso.TaskpaneButton.Tooltip" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Contoso.tpicon_16x16" />
+                    <bt:Image size="32" resid="Contoso.tpicon_32x32" />
+                    <bt:Image size="80" resid="Contoso.tpicon_80x80" />
+                  </Icon>
+
+                  <!-- Isso é o que acontece quando o comando é acionado (por exemplo, via clique na faixa de opções). As ações com suporte são ExecuteFunction ou ShowTaskpane. -->
+                  <Action xsi:type="ShowTaskpane">
+                    <TaskpaneId>ButtonId1</TaskpaneId>
+                    <!-- Forneça uma ID do recurso de URL para o local que será exibido no painel de tarefas. -->
+                    <SourceLocation resid="Contoso.Taskpane.Url" />
+                  </Action>
+                </Control>
+              </Group>
+            </OfficeTab>
+          </ExtensionPoint>
+        </DesktopFormFactor>
+      </Host>
+    </Hosts>
+    
+    <!-- Você pode usar recursos entre hosts e fatores forma. -->
+    <Resources>
+      <bt:Images>
+        <bt:Image id="Contoso.tpicon_16x16" DefaultValue="~remoteAppUrl/Images/Button16x16.png" />
+        <bt:Image id="Contoso.tpicon_32x32" DefaultValue="~remoteAppUrl/Images/Button32x32.png" />
+        <bt:Image id="Contoso.tpicon_80x80" DefaultValue="~remoteAppUrl/Images/Button80x80.png" />
+      </bt:Images>
+      <bt:Urls>
+        <bt:Url id="Contoso.DesktopFunctionFile.Url" DefaultValue="~remoteAppUrl/Functions/FunctionFile.html" />
+        <bt:Url id="Contoso.Taskpane.Url" DefaultValue="~remoteAppUrl/Home.html" />
+        <bt:Url id="Contoso.GetStarted.LearnMoreUrl" DefaultValue="https://go.microsoft.com/fwlink/?LinkId=276812" />
+      </bt:Urls>
+      <!-- número máximo de caracteres em ShortStrings = 125. -->
+      <bt:ShortStrings>
+        <bt:String id="Contoso.TaskpaneButton.Label" DefaultValue="Show Taskpane" />
+        <bt:String id="Contoso.Group1Label" DefaultValue="Commands Group" />
+        <bt:String id="Contoso.GetStarted.Title" DefaultValue="Get started with your sample add-in!" />
+      </bt:ShortStrings>
+      <!-- número máximo de caracteres em LongStrings = 250. -->
+      <bt:LongStrings>
+        <bt:String id="Contoso.TaskpaneButton.Tooltip" DefaultValue="Click to Show a Taskpane" />
+        <bt:String id="Contoso.GetStarted.Description" DefaultValue="Your sample add-in loaded succesfully. Go to the HOME tab and click the 'Show Taskpane' button to get started." />
+      </bt:LongStrings>
+    </Resources>
+  </VersionOverrides>
+  <!-- Fim – integração do Modo de Comandos do Suplemento. -->
+
+</OfficeApp>
